@@ -110,6 +110,11 @@ const ProductMenuList = (props: Props): JSX.Element | null => {
     const someIntegrationEnabled = enableIncomingWebhooks || enableOutgoingWebhooks || enableCommands || enableOAuthServiceProvider || canManageSystemBots;
     const showIntegrations = !isMobile && someIntegrationEnabled && canManageIntegrations;
 
+
+    const rawEeWidgets = localStorage.getItem('eeWidgets')
+
+    const eeWidgets = rawEeWidgets === null ? [] : JSON.parse(rawEeWidgets)
+
     return (
         <Menu.Group>
             <div onClick={onClick}>
@@ -208,20 +213,22 @@ const ProductMenuList = (props: Props): JSX.Element | null => {
                         icon={<ViewGridPlusOutlineIcon size={18}/>}
                     />
                 </TeamPermissionGate>
+
                 <Menu.ItemExternalLink
-                    id='nativeAppLink'
-                    show={appDownloadLink && !UserAgent.isMobileApp()}
-                    url={makeUrlSafe(appDownloadLink)}
-                    text={formatMessage({id: 'navbar_dropdown.nativeApps', defaultMessage: 'Download Apps'})}
-                    icon={<DownloadOutlineIcon size={18}/>}
-                />
-                <Menu.ItemToggleModalRedux
-                    id='about'
-                    modalId={ModalIdentifiers.ABOUT}
-                    dialogType={AboutBuildModal}
-                    text={formatMessage({id: 'navbar_dropdown.about', defaultMessage: 'About {appTitle}'}, {appTitle: siteName})}
-                    icon={<InformationOutlineIcon size={18}/>}
-                />
+                        id='nativeAppLink'
+                        show={true}
+                        url="/"
+                        text="Home"
+                        // icon={}
+                    />
+                {eeWidgets.map(i => (
+                    <Menu.ItemExternalLink
+                        id='nativeAppLink'
+                        show={true}
+                        url={i.href}
+                        text={i.name}
+                        // icon={}
+                    />))}    
             </div>
         </Menu.Group>
     );

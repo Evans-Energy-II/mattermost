@@ -161,7 +161,7 @@ export default class Logs extends React.PureComponent<Props, State> {
                     <ExternalLink
                         location='download_logs'
                         className='btn btn-primary'
-                        href={Client4.getUrl() + '/api/v4/logs/download'}
+                        href={Client4.getUrl() + '/chat/api/v4/logs/download'}
                     >
                         <FormattedMessage
                             id='admin.logs.DownloadLogs'
@@ -199,7 +199,7 @@ export default class Logs extends React.PureComponent<Props, State> {
                         <ExternalLink
                             location='download_logs'
                             className='btn btn-primary'
-                            href={Client4.getUrl() + '/api/v4/logs/download'}
+                            href={Client4.getUrl() + '/chat/api/v4/logs/download'}
                         >
                             <FormattedMessage
                                 id='admin.logs.DownloadLogs'

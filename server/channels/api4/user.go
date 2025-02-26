@@ -1650,12 +1650,7 @@ func updateUserMfa(c *Context, w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if appErr := c.App.MFARequired(c.AppContext); !c.AppContext.Session().Local && c.AppContext.Session().UserId != c.Params.UserId && appErr != nil {
-		c.Err = appErr
-		return
-	}
-
-	if user, appErr := c.App.GetUser(c.Params.UserId); appErr == nil {
+	if user, err := c.App.GetUser(c.Params.UserId); err == nil {
 		audit.AddEventParameterAuditable(auditRec, "user", user)
 	}
 
@@ -1677,8 +1672,8 @@ func updateUserMfa(c *Context, w http.ResponseWriter, r *http.Request) {
 
 	c.LogAudit("attempt")
 
-	if appErr := c.App.UpdateMfa(c.AppContext, activate, c.Params.UserId, code); appErr != nil {
-		c.Err = appErr
+	if err := c.App.UpdateMfa(c.AppContext, activate, c.Params.UserId, code); err != nil {
+		c.Err = err
 		return
 	}
 
@@ -2891,22 +2886,22 @@ func demoteUserToGuest(c *Context, w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if c.App.Channels().License() == nil {
-		c.Err = model.NewAppError("Api4.demoteUserToGuest", "api.team.demote_user_to_guest.license.error", nil, "", http.StatusNotImplemented)
-		return
-	}
+	// if c.App.Channels().License() == nil {
+	// 	c.Err = model.NewAppError("Api4.demoteUserToGuest", "api.team.demote_user_to_guest.license.error", nil, "", http.StatusNotImplemented)
+	// 	return
+	// }
 
-	if !*c.App.Config().GuestAccountsSettings.Enable {
-		c.Err = model.NewAppError("Api4.demoteUserToGuest", "api.team.demote_user_to_guest.disabled.error", nil, "", http.StatusNotImplemented)
-		return
-	}
+	// if !*c.App.Config().GuestAccountsSettings.Enable {
+	// 	c.Err = model.NewAppError("Api4.demoteUserToGuest", "api.team.demote_user_to_guest.disabled.error", nil, "", http.StatusNotImplemented)
+	// 	return
+	// }
 
-	guestEnabled := c.App.Channels().License() != nil && *c.App.Channels().License().Features.GuestAccounts
+	// guestEnabled := c.App.Channels().License() != nil && *c.App.Channels().License().Features.GuestAccounts
 
-	if !guestEnabled {
-		c.Err = model.NewAppError("Api4.demoteUserToGuest", "api.team.invite_guests_to_channels.disabled.error", nil, "", http.StatusForbidden)
-		return
-	}
+	// if !guestEnabled {
+	// 	c.Err = model.NewAppError("Api4.demoteUserToGuest", "api.team.invite_guests_to_channels.disabled.error", nil, "", http.StatusForbidden)
+	// 	return
+	// }
 
 	auditRec := c.MakeAuditRecord("demoteUserToGuest", audit.Fail)
 	audit.AddEventParameter(auditRec, "user_id", c.Params.UserId)

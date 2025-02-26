@@ -974,7 +974,6 @@ type CacheSettings struct {
 	RedisAddress       *string `access:",write_restrictable,cloud_restrictable"` // telemetry: none
 	RedisPassword      *string `access:",write_restrictable,cloud_restrictable"` // telemetry: none
 	RedisDB            *int    `access:",write_restrictable,cloud_restrictable"` // telemetry: none
-	RedisCachePrefix   *string `access:",write_restrictable,cloud_restrictable"` // telemetry: none
 	DisableClientCache *bool   `access:",write_restrictable,cloud_restrictable"` // telemetry: none
 }
 
@@ -993,10 +992,6 @@ func (s *CacheSettings) SetDefaults() {
 
 	if s.RedisDB == nil {
 		s.RedisDB = NewPointer(-1)
-	}
-
-	if s.RedisCachePrefix == nil {
-		s.RedisCachePrefix = NewPointer("")
 	}
 
 	if s.DisableClientCache == nil {

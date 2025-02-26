@@ -75,14 +75,6 @@ const RightControls = ({productId = null}: Props): JSX.Element => {
                 />
             )}
             <StyledCustomizeYourExperienceTour id='CustomizeYourExperienceTour'>
-                {
-                    isChannels(productId) ? (
-                        <>
-                            <SettingsButton/>
-                            {showCustomizeTip && <CustomizeYourExperienceTour/>}
-                        </>
-                    ) : null
-                }
                 <UserAccountMenu/>
             </StyledCustomizeYourExperienceTour>
         </RightControlsContainer>

@@ -5,7 +5,7 @@ import React, {Fragment, useCallback, useEffect, useMemo, useRef, memo} from 're
 import type {ChangeEvent, ReactNode} from 'react';
 import {FormattedMessage} from 'react-intl';
 import ReactSelect from 'react-select';
-import type {OnChangeValue, Options} from 'react-select';
+import type {ValueType, OptionsType} from 'react-select';
 
 import type {UserNotifyProps} from '@mattermost/types/users';
 
@@ -88,7 +88,7 @@ function DesktopAndMobileNotificationSettings({
         setParentState('desktopAndMobileSettingsDifferent', value);
     }, [setParentState]);
 
-    const handleChangeForSendMobileNotificationsSelect = useCallback((selectedOption: OnChangeValue<SelectOption, boolean>) => {
+    const handleChangeForSendMobileNotificationsSelect = useCallback((selectedOption: ValueType<SelectOption>) => {
         if (selectedOption && 'value' in selectedOption) {
             setParentState('pushActivity', selectedOption.value);
         }
@@ -99,7 +99,7 @@ function DesktopAndMobileNotificationSettings({
         setParentState('pushThreads', value);
     }, [setParentState]);
 
-    const handleChangeForTriggerMobileNotificationsSelect = useCallback((selectedOption: OnChangeValue<SelectOption, boolean>) => {
+    const handleChangeForTriggerMobileNotificationsSelect = useCallback((selectedOption: ValueType<SelectOption>) => {
         if (selectedOption && 'value' in selectedOption) {
             setParentState('pushStatus', selectedOption.value);
         }
@@ -203,6 +203,7 @@ function DesktopAndMobileNotificationSettings({
                         className='react-select singleSelect'
                         classNamePrefix='react-select'
                         options={optionsOfSendNotifications}
+                        clearable={false}
                         isClearable={false}
                         isSearchable={false}
                         components={{IndicatorSeparator: NoIndicatorSeparatorComponent}}
@@ -256,6 +257,7 @@ function DesktopAndMobileNotificationSettings({
                         className='react-select singleSelect'
                         classNamePrefix='react-select'
                         options={optionsOfSendMobileNotificationsWhenSelect}
+                        clearable={false}
                         isClearable={false}
                         isSearchable={false}
                         components={{IndicatorSeparator: NoIndicatorSeparatorComponent}}
@@ -424,7 +426,7 @@ function shouldShowSendMobileNotificationsSection(sendPushNotifications: UserSet
     return false;
 }
 
-export function getValueOfSendMobileNotificationForSelect(pushActivity: UserNotifyProps['push']): OnChangeValue<SelectOption, boolean> {
+export function getValueOfSendMobileNotificationForSelect(pushActivity: UserNotifyProps['push']): ValueType<SelectOption> {
     if (!pushActivity) {
         return optionsOfSendNotifications[1];
     }
@@ -460,7 +462,7 @@ export function shouldShowTriggerMobileNotificationsSection(sendPushNotification
     return true;
 }
 
-const optionsOfSendMobileNotificationsWhenSelect: Options<SelectOption> = [
+const optionsOfSendMobileNotificationsWhenSelect: OptionsType<SelectOption> = [
     {
         label: (
             <FormattedMessage
@@ -490,7 +492,7 @@ const optionsOfSendMobileNotificationsWhenSelect: Options<SelectOption> = [
     },
 ];
 
-export function getValueOfSendMobileNotificationWhenSelect(pushStatus?: UserNotifyProps['push_status']): OnChangeValue<SelectOption, boolean> {
+export function getValueOfSendMobileNotificationWhenSelect(pushStatus?: UserNotifyProps['push_status']): ValueType<SelectOption> {
     if (!pushStatus) {
         return optionsOfSendMobileNotificationsWhenSelect[2];
     }

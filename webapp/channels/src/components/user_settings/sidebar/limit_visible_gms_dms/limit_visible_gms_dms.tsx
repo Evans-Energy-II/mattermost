@@ -5,7 +5,7 @@ import React from 'react';
 import type {RefObject} from 'react';
 import {FormattedMessage} from 'react-intl';
 import ReactSelect from 'react-select';
-import type {OnChangeValue, StylesConfig} from 'react-select';
+import type {ValueType} from 'react-select';
 
 import type {PreferencesType, PreferenceType} from '@mattermost/types/preferences';
 
@@ -94,7 +94,7 @@ export default class LimitVisibleGMsDMs extends React.PureComponent<Props, State
         }
     }
 
-    handleChange = (selected: OnChangeValue<Limit, boolean>) => {
+    handleChange = (selected: ValueType<Limit>) => {
         if (selected && 'value' in selected) {
             this.setState({limit: selected});
         }
@@ -158,7 +158,7 @@ export default class LimitVisibleGMsDMs extends React.PureComponent<Props, State
                             classNamePrefix='react-select'
                             id='limitVisibleGMsDMs'
                             options={limits}
-                            isClearable={false}
+                            clearable={false}
                             onChange={this.handleChange}
                             value={this.state.limit}
                             isSearchable={false}
@@ -182,8 +182,8 @@ export default class LimitVisibleGMsDMs extends React.PureComponent<Props, State
 }
 
 const reactStyles = {
-    menuPortal: (provided) => ({
+    menuPortal: (provided: React.CSSProperties) => ({
         ...provided,
         zIndex: 9999,
     }),
-} satisfies StylesConfig<Limit, boolean>;
+};

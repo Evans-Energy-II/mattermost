@@ -161,7 +161,7 @@ func (a *App) RecycleDatabaseConnection(rctx request.CTX) {
 }
 
 func (a *App) TestSiteURL(rctx request.CTX, siteURL string) *model.AppError {
-	url := fmt.Sprintf("%s/api/v4/system/ping", siteURL)
+	url := fmt.Sprintf("%s/chat/api/v4/system/ping", siteURL)
 	res, err := http.Get(url)
 	if err != nil || res.StatusCode != 200 {
 		return model.NewAppError("testSiteURL", "app.admin.test_site_url.failure", nil, "", http.StatusBadRequest)

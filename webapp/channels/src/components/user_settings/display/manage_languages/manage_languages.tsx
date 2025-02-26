@@ -5,7 +5,7 @@ import React from 'react';
 import {FormattedMessage, injectIntl} from 'react-intl';
 import type {IntlShape} from 'react-intl';
 import ReactSelect from 'react-select';
-import type {StylesConfig, OnChangeValue, AriaOnFocus, AriaOnChange} from 'react-select';
+import type {ValueType} from 'react-select';
 
 import type {UserProfile} from '@mattermost/types/users';
 
@@ -101,7 +101,7 @@ export class ManageLanguage extends React.PureComponent<Props, State> {
         }
     };
 
-    setLanguage = (selectedOption: OnChangeValue<SelectedOption, boolean>) => {
+    setLanguage = (selectedOption: ValueType<SelectedOption>) => {
         if (selectedOption && 'value' in selectedOption) {
             this.setState({
                 locale: selectedOption.value,
@@ -184,20 +184,11 @@ export class ManageLanguage extends React.PureComponent<Props, State> {
         });
 
         const reactStyles = {
-            menuPortal: (provided) => ({
+            menuPortal: (provided: React.CSSProperties) => ({
                 ...provided,
                 zIndex: 9999,
             }),
-        } satisfies StylesConfig<SelectedOption, boolean>;
-
-        const onFocusMessage: AriaOnFocus<SelectedOption> = ({focused}) => {
-            return `option ${focused.label} focused`;
         };
-
-        const onChangeMessage: AriaOnChange<SelectedOption, boolean> = (option) => {
-            return `option ${option.label} selected`;
-        };
-
         const interfaceLanguageLabelAria = intl.formatMessage({id: 'user.settings.languages.dropdown.arialabel', defaultMessage: 'Dropdown selector to change the interface language'});
 
         const input = (
@@ -221,23 +212,18 @@ export class ManageLanguage extends React.PureComponent<Props, State> {
                     <ReactSelect
                         className='react-select react-select-top'
                         classNamePrefix='react-select'
-                        ariaLiveMessages={{
-                            onFocus: onFocusMessage,
-                            onChange: onChangeMessage,
-                        }}
                         id='displayLanguage'
                         menuIsOpen={this.state.openMenu}
                         menuPortalTarget={document.body}
                         styles={reactStyles}
                         options={options}
-                        isClearable={false}
+                        clearable={false}
                         onChange={this.setLanguage}
                         onKeyDown={this.handleKeyDown}
                         value={this.state.selectedOption}
                         onMenuClose={this.handleMenuClose}
                         onMenuOpen={this.handleMenuOpen}
                         aria-labelledby='changeInterfaceLanguageLabel'
-                        aria-live='assertive'
                     />
                     {serverError}
                 </div>
@@ -278,7 +264,6 @@ export class ManageLanguage extends React.PureComponent<Props, State> {
                 saving={this.state.isSaving}
                 inputs={[input]}
                 updateSection={this.props.updateSection}
-                disableEnterSubmit={true}
             />
         );
     }

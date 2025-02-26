@@ -355,7 +355,7 @@ func Init(srv *app.Server) (*API, error) {
 		api.BaseRoutes.Root.Handle("/manualtest", api.APIHandler(manualtesting.ManualTest)).Methods(http.MethodGet)
 	}
 
-	srv.Router.Handle("/api/v4/{anything:.*}", http.HandlerFunc(api.Handle404))
+	srv.Router.Handle("/chat/api/v4/{anything:.*}", http.HandlerFunc(api.Handle404))
 
 	InitLocal(srv)
 
@@ -458,7 +458,7 @@ func InitLocal(srv *app.Server) *API {
 	api.InitSamlLocal()
 	api.InitCustomProfileAttributesLocal()
 
-	srv.LocalRouter.Handle("/api/v4/{anything:.*}", http.HandlerFunc(api.Handle404))
+	srv.LocalRouter.Handle("/chat/api/v4/{anything:.*}", http.HandlerFunc(api.Handle404))
 
 	return api
 }

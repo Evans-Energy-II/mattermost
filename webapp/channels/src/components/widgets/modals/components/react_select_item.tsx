@@ -3,7 +3,7 @@
 
 import type {ReactNode} from 'react';
 import React from 'react';
-import type {OnChangeValue} from 'react-select';
+import type {ValueType} from 'react-select';
 import ReactSelect from 'react-select';
 
 import type {BaseSettingItemProps} from './base_setting_item';
@@ -27,7 +27,7 @@ export type FieldsetReactSelect = {
 type Props = BaseSettingItemProps & {
     inputFieldData: FieldsetReactSelect;
     inputFieldValue: Option;
-    handleChange: (selected: OnChangeValue<Option, boolean>) => void;
+    handleChange: (selected: ValueType<Option>) => void;
 }
 
 function ReactSelectItemCreator({
@@ -47,6 +47,7 @@ function ReactSelectItemCreator({
                 className='react-select singleSelect react-select-top'
                 classNamePrefix='react-select'
                 options={inputFieldData.options}
+                clearable={inputFieldData.clearable}
                 isClearable={inputFieldData.clearable}
                 isSearchable={false}
                 onChange={handleChange}

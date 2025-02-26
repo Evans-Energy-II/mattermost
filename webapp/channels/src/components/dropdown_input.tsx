@@ -3,9 +3,10 @@
 
 import classNames from 'classnames';
 import React, {useCallback, useRef, useState} from 'react';
+import type {CSSProperties} from 'react';
 import {useIntl} from 'react-intl';
 import ReactSelect, {components} from 'react-select';
-import type {Props as SelectProps, ActionMeta, StylesConfig} from 'react-select';
+import type {Props as SelectProps, ActionMeta} from 'react-select';
 
 import InputError from 'components/input_error';
 import type {CustomMessageInputType} from 'components/widgets/inputs/input/input';
@@ -28,35 +29,33 @@ type Props<T extends ValueType> = Omit<SelectProps<T>, 'onChange'> & {
     onChange: (value: T, action: ActionMeta<T>) => void;
     testId?: string;
     required?: boolean;
-    addon?: React.ReactNode;
-    textPrefix?: React.ReactNode;
 };
 
 const baseStyles = {
-    input: (provided) => ({
+    input: (provided: CSSProperties) => ({
         ...provided,
         color: 'var(--center-channel-color)',
     }),
-    control: (provided) => ({
+    control: (provided: CSSProperties) => ({
         ...provided,
         border: 'none',
         boxShadow: 'none',
         padding: '0 2px',
         cursor: 'pointer',
     }),
-    indicatorSeparator: (provided) => ({
+    indicatorSeparator: (provided: CSSProperties) => ({
         ...provided,
         display: 'none',
     }),
-    menu: (provided) => ({
+    menu: (provided: CSSProperties) => ({
         ...provided,
         zIndex: 100,
     }),
-    menuPortal: (provided) => ({
+    menuPortal: (provided: CSSProperties) => ({
         ...provided,
         zIndex: 100,
     }),
-} satisfies StylesConfig;
+};
 
 const IndicatorsContainer = (props: any) => {
     return (
@@ -90,11 +89,11 @@ const Option = (props: any) => {
 };
 
 const DropdownInput = <T extends ValueType>(props: Props<T>) => {
-    const {value, placeholder, className, addon, name, textPrefix, legend, onChange, styles, options, error, testId, required, ...otherProps} = props; // types are not inferred correctly for `props` in react-select version v5.
+    const {value, placeholder, className, addon, name, textPrefix, legend, onChange, styles, options, error, testId, required, ...otherProps} = props;
 
     const [focused, setFocused] = useState(false);
 
-    const onInputFocus = (event: React.FocusEvent<HTMLInputElement>) => {
+    const onInputFocus = (event: React.FocusEvent<HTMLElement>) => {
         const {onFocus} = props;
 
         setFocused(true);
@@ -123,7 +122,7 @@ const DropdownInput = <T extends ValueType>(props: Props<T>) => {
         setCustomInputLabel({type: ItemStatus.ERROR, value: validationErrorMsg});
     }, [required, formatMessage]);
 
-    const onInputBlur = useCallback((event: React.FocusEvent<HTMLInputElement>) => {
+    const onInputBlur = useCallback((event: React.FocusEvent<HTMLElement>) => {
         setFocused(false);
         validateInput();
 

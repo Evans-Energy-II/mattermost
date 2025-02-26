@@ -27,7 +27,7 @@ import MenuWrapper from 'components/widgets/menu/menu_wrapper';
 import {useCurrentProductId, useProducts, isChannels} from 'utils/products';
 
 import ProductBranding from './product_branding';
-import ProductBrandingTeamEdition from './product_branding_team_edition';
+// import ProductBrandingTeamEdition from './product_branding_team_edition';
 import ProductMenuItem from './product_menu_item';
 import ProductMenuList from './product_menu_list';
 
@@ -132,8 +132,6 @@ const ProductMenu = (): JSX.Element => {
                             size={20}
                             color='rgba(var(--sidebar-text-rgb), 0.56)'
                         />
-                        {license.IsLicensed === 'false' && <ProductBrandingTeamEdition/>}
-                        {license.IsLicensed === 'true' && <ProductBranding/>}
                     </ProductMenuButton>
                 </ProductMenuContainer>
                 <Menu

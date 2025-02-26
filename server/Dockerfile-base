@@ -1,0 +1,20 @@
+FROM ubuntu:jammy
+
+COPY ./config.json /tmp/config.json
+COPY ./init /usr/bin
+COPY ./dist /mattermost
+COPY ./nginx /tmp/nginx
+COPY ./init /usr/bin/init
+
+WORKDIR /mattermost
+
+RUN  echo "America/Chicago" > /etc/timezone && \
+     apt update && DEBIAN_FRONTEND=noninteractive apt install -y  gpg curl lsb-release sudo vim && \
+     curl -fsSL -o /tmp/pubkey.gpg https://openresty.org/package/pubkey.gpg && \
+     cat /tmp/pubkey.gpg | gpg --dearmor -o /etc/apt/trusted.gpg.d/openresty.gpg && \
+     mv /tmp/nginx/openresty.list /etc/apt/sources.list.d/openresty.list && \
+     apt update && apt install -y openresty libtest-nginx-perl && \
+     opm get bungle/lua-resty-nettle fffonion/lua-resty-openssl && \
+     tar -xvzf mattermost-team-linux-amd64.tar.gz || /bin/true && \
+     cp /tmp/nginx/* /usr/local/openresty/nginx/conf/ && \
+     cp -R /mattermost/mattermost/client /mattermost/static

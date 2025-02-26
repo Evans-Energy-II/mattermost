@@ -665,7 +665,7 @@ export class SchemaAdminSettings extends React.PureComponent<Props, State> {
         });
 
         if (setting.multiple) {
-            const noOptionsMessage = typeof setting.no_result === 'object' ? (
+            const noResultText = typeof setting.no_result === 'object' ? (
                 <FormattedMessage {...setting.no_result}/>
             ) : setting.no_result;
             return (
@@ -679,7 +679,7 @@ export class SchemaAdminSettings extends React.PureComponent<Props, State> {
                     disabled={this.isDisabled(setting)}
                     setByEnv={this.isSetByEnv(setting.key)}
                     onChange={this.handleChange}
-                    noOptionsMessage={noOptionsMessage}
+                    noResultText={noResultText}
                 />
             );
         }
@@ -721,7 +721,7 @@ export class SchemaAdminSettings extends React.PureComponent<Props, State> {
                     disabled={this.isDisabled(setting)}
                     setByEnv={this.isSetByEnv(setting.key)}
                     onChange={(changedId, value) => this.handleChange(changedId, value.join(','))}
-                    noOptionsMessage={descriptorOrStringToString(setting.no_result, this.props.intl)}
+                    noResultText={descriptorOrStringToString(setting.no_result, this.props.intl)}
                 />
             );
         }

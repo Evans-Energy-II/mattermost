@@ -237,10 +237,10 @@ func (ch *Channels) initPlugins(c request.CTX, pluginDir, webappPluginDir string
 	// Sync plugin active state when config changes. Also notify plugins.
 	ch.pluginsLock.Lock()
 	ch.RemoveConfigListener(ch.pluginConfigListenerID)
-	ch.pluginConfigListenerID = ch.AddConfigListener(func(oldCfg, newCfg *model.Config) {
+	ch.pluginConfigListenerID = ch.AddConfigListener(func(old, new *model.Config) {
 		// If plugin status remains unchanged, only then run this.
 		// Because (*App).InitPlugins is already run as a config change hook.
-		if *oldCfg.PluginSettings.Enable == *newCfg.PluginSettings.Enable {
+		if *old.PluginSettings.Enable == *new.PluginSettings.Enable {
 			ch.syncPluginsActiveState()
 		}
 
@@ -1074,6 +1074,7 @@ var transitionallyPrepackagedPlugins = []string{
 	"focalboard",
 	"mattermost-autolink",
 	"com.mattermost.aws-sns",
+	"com.mattermost.plugin-channel-export",
 	"com.mattermost.confluence",
 	"com.mattermost.custom-attributes",
 	"jenkins",

@@ -101,7 +101,7 @@ export default class LoggedIn extends React.PureComponent<Props> {
             if (rootEl) {
                 rootEl.setAttribute('class', '');
             }
-            GlobalActions.emitUserLoggedOutEvent('/login?redirect_to=' + encodeURIComponent(`${this.props.location.pathname}${this.props.location.search}`), true, false);
+            GlobalActions.emitUserLoggedOutEvent('/caht/login?redirect_to=' + encodeURIComponent(`${this.props.location.pathname}${this.props.location.search}`), true, false);
         }
 
         // Prevent backspace from navigating back a page

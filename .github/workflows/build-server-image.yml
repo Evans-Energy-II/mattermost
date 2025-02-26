@@ -3,7 +3,7 @@ name: BuildEnv Docker Image
 on:
   push:
     branches:
-      - master
+      - build
     paths:
       - server/build/Dockerfile.buildenv
       - .github/workflows/build-server-image.yml

@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import React, {useCallback, useRef, useState, useMemo} from 'react';
 import {FormattedList, FormattedMessage, useIntl} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
-import type {OnChangeValue} from 'react-select';
+import type {ValueType} from 'react-select';
 
 import {GenericModal} from '@mattermost/components';
 import type {Post, PostPreviewMetadata} from '@mattermost/types/posts';
@@ -108,7 +108,7 @@ const ForwardPostModal = ({onExited, post}: Props) => {
     }, [onExited]);
 
     const handleChannelSelect = useCallback(
-        (channel: OnChangeValue<ChannelOption, boolean>) => {
+        (channel: ValueType<ChannelOption>) => {
             if (Array.isArray(channel)) {
                 setSelectedChannel(channel[0]);
             }

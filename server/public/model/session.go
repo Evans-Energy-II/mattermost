@@ -83,7 +83,7 @@ func (s *Session) Auditable() map[string]interface{} {
 	}
 }
 
-// IsUnrestricted returns true if the session is unrestricted, which should grant it
+// Returns true if the session is unrestricted, which should grant it
 // with all permissions. This is used for local mode sessions
 func (s *Session) IsUnrestricted() bool {
 	return s.Local

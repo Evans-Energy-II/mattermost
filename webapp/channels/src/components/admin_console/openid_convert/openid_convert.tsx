@@ -49,7 +49,7 @@ export default class OpenIdConvert extends React.PureComponent<Props, State> {
         newConfig.GoogleSettings.DiscoveryEndpoint = 'https://accounts.google.com/.well-known/openid-configuration';
 
         if (newConfig.GitLabSettings.UserAPIEndpoint) {
-            const url = newConfig.GitLabSettings.UserAPIEndpoint.replace('/api/v4/user', '');
+            const url = newConfig.GitLabSettings.UserAPIEndpoint.replace('/chat/api/v4/user', '');
             newConfig.GitLabSettings.DiscoveryEndpoint = url + '/.well-known/openid-configuration';
         }
 

@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import React, {useCallback, useMemo, useRef, useState} from 'react';
 import {useIntl} from 'react-intl';
 import {useSelector} from 'react-redux';
-import type {OnChangeValue} from 'react-select';
+import type {ValueType} from 'react-select';
 
 import type {ClientError} from '@mattermost/client';
 import {GenericModal} from '@mattermost/components';
@@ -87,7 +87,7 @@ const MoveThreadModal = ({onExited, post, actions}: Props) => {
         onExited?.();
     }, [onExited]);
 
-    const handleChannelSelect = useCallback((channel: OnChangeValue<ChannelOption, boolean>) => {
+    const handleChannelSelect = useCallback((channel: ValueType<ChannelOption>) => {
         if (Array.isArray(channel)) {
             setSelectedChannel(channel[0]);
             return;

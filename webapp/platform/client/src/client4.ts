@@ -169,7 +169,7 @@ export default class Client4 {
     token = '';
     csrf = '';
     url = '';
-    urlVersion = '/api/v4';
+    urlVersion = '/chat/api/v4';
     userAgent: string | null = null;
     enableLogging = false;
     defaultHeaders: {[x: string]: string} = {};

@@ -74,17 +74,15 @@ func (c *cacheProvider) Type() string {
 }
 
 type redisProvider struct {
-	client      rueidis.Client
-	cachePrefix string
-	metrics     einterfaces.MetricsInterface
+	client  rueidis.Client
+	metrics einterfaces.MetricsInterface
 }
 
 type RedisOptions struct {
-	RedisAddr        string
-	RedisPassword    string
-	RedisDB          int
-	RedisCachePrefix string
-	DisableCache     bool
+	RedisAddr     string
+	RedisPassword string
+	RedisDB       int
+	DisableCache  bool
 }
 
 // NewProvider creates a new CacheProvider
@@ -109,14 +107,11 @@ func NewRedisProvider(opts *RedisOptions) (Provider, error) {
 	if err != nil {
 		return nil, err
 	}
-	return &redisProvider{client: client, cachePrefix: opts.RedisCachePrefix}, nil
+	return &redisProvider{client: client}, nil
 }
 
 // NewCache creates a new cache with given opts
 func (r *redisProvider) NewCache(opts *CacheOptions) (Cache, error) {
-	if r.cachePrefix != "" {
-		opts.Name = r.cachePrefix + ":" + opts.Name
-	}
 	rr, err := NewRedis(opts, r.client)
 	rr.metrics = r.metrics
 	return rr, err

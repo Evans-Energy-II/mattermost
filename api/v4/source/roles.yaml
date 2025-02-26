@@ -100,8 +100,7 @@
 
         ##### Permissions
 
-        Must have `sysconsole_write_user_management_permissions` or `manage_system` permission.
-        When updating the role of a system admin, the `manage_system` permission is mandatory.
+        `manage_system` permission is required.
 
 
         __Minimum server version__: 4.9

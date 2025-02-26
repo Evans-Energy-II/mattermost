@@ -118,7 +118,7 @@ export function measurePageLoadTelemetry() {
 
                 if (resourceTimingEntry.responseEnd - resourceTimingEntry.startTime > longestAPIResourceDuration) {
                     longestAPIResourceDuration = resourceTimingEntry.responseEnd - resourceTimingEntry.startTime;
-                    longestAPIResource = resourceTimingEntry.name?.split('/api/')?.[1] ?? '';
+                    longestAPIResource = resourceTimingEntry.name?.split('/chat/api/')?.[1] ?? '';
                 }
             }
         });
@@ -209,7 +209,7 @@ function initRequestCountingIfNecessary() {
         for (const entry of entries.getEntries()) {
             const url = entry.name;
 
-            if (!url.includes('/api/v4/')) {
+            if (!url.includes('/chat/api/v4/')) {
                 // Don't count requests made outside of the MM server's API
                 continue;
             }

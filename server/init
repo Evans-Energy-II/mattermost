@@ -1,0 +1,13 @@
+#!/bin/bash
+
+export PATH=/usr/local/rvm/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/bun/bin:/usr/local/rvm/rubies/ruby-3.3.4/bin
+
+
+NGX_CFG=/usr/local/openresty/nginx/conf
+
+sed -i -e "s/--PORT--/$PORT/g" $NGX_CFG/nginx.conf
+sed -i -e "s/--SECRET_KEY_BASE--/$SECRET_KEY_BASE/g" $NGX_CFG/nginx.conf
+
+cd $NGX_CFG
+/usr/local/openresty/bin/openresty
+/mattermost/mattermost/bin/mattermost server

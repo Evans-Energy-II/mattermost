@@ -268,7 +268,7 @@ func (a *App) MFARequired(rctx request.CTX) *model.AppError {
 
 	// Special case to let user get themself
 	subpath, _ := utils.GetSubpathFromConfig(a.Config())
-	if rctx.Path() == path.Join(subpath, "/api/v4/users/me") {
+	if rctx.Path() == path.Join(subpath, "/chat/api/v4/users/me") {
 		return nil
 	}
 
@@ -284,8 +284,8 @@ func (a *App) MFARequired(rctx request.CTX) *model.AppError {
 	return nil
 }
 
-func checkUserLoginAttempts(user *model.User, maxAttempts int) *model.AppError {
-	if user.FailedAttempts >= maxAttempts {
+func checkUserLoginAttempts(user *model.User, max int) *model.AppError {
+	if user.FailedAttempts >= max {
 		return model.NewAppError("checkUserLoginAttempts", "api.user.check_user_login_attempts.too_many.app_error", nil, "user_id="+user.Id, http.StatusUnauthorized)
 	}
 

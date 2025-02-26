@@ -10,6 +10,9 @@ import (
 	"sort"
 	"strings"
 	"sync"
+  "fmt"
+	"os"
+  "github.com/redis/go-redis/v9"
 
 	"github.com/pkg/errors"
 
@@ -49,6 +52,18 @@ func (a *App) SendNotifications(c request.CTX, post *model.Post, team *model.Tea
 	if channel.DeleteAt > 0 {
 		return []string{}, nil
 	}
+
+	opt, err := redis.ParseURL(os.Getenv("REDIS_URL"))
+
+	if err != nil {
+		panic(err)
+	}
+
+	rdb := redis.NewClient(opt)
+
+
+	defer rdb.Close()
+
 
 	isCRTAllowed := *a.Config().ServiceSettings.CollapsedThreads != model.CollapsedThreadsDisabled
 
@@ -412,6 +427,32 @@ func (a *App) SendNotifications(c request.CTX, post *model.Post, team *model.Tea
 				continue
 			}
 
+			var status *model.Status
+			var err *model.AppError
+			if status, err = a.GetStatus(id); err != nil {
+				status = &model.Status{UserId: id, Status: model.StatusOffline, Manual: false, LastActivityAt: 0, ActiveChannel: ""}
+			}
+
+			if(status.Status == "away" || status.Status == "offline") {
+			// 	a.NotificationsLog().Trace("***************************************************************",
+			// 	mlog.String("type", model.NotificationTypeEmail),
+			// 	mlog.String("post_id", post.Id),
+			// 	mlog.String("status", model.NotificationStatusError),
+			// 	mlog.String("reason", model.NotificationReasonEmailSendError),
+			// 	mlog.String("sender_id", sender.Id),
+			// 	mlog.String("receiver_id", id),
+			// 	mlog.String("status", status.Status),
+			// )
+
+			jsonBytes, err := json.Marshal(notification)
+			if err != nil {
+					fmt.Println("Error:", err)
+					continue
+			}
+    
+			rdb.Publish(context.Background(), "push_notification", string(jsonBytes))
+		}
+
 			if a.userAllowsEmail(c, profileMap[id], channelMemberNotifyPropsMap[id], post) {
 				senderProfileImage, _, err := a.GetProfileImage(sender)
 				if err != nil {
@@ -620,6 +661,8 @@ func (a *App) SendNotifications(c request.CTX, post *model.Post, team *model.Tea
 			if status, err = a.GetStatus(id); err != nil {
 				status = &model.Status{UserId: id, Status: model.StatusOffline, Manual: false, LastActivityAt: 0, ActiveChannel: ""}
 			}
+
+
 
 			if statusReason := doesStatusAllowPushNotification(profileMap[id].NotifyProps, status, post.ChannelId, true); statusReason == "" {
 				a.sendPushNotification(

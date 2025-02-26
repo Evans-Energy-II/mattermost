@@ -33,8 +33,9 @@ describe('components/widgets/inputs/ChannelsInput', () => {
             />,
         );
         expect(wrapper).toMatchInlineSnapshot(`
-            <ForwardRef
+            <Async
               aria-label="test"
+              cacheOptions={false}
               className="ChannelsInput empty"
               classNamePrefix="channels-input"
               components={
@@ -46,6 +47,7 @@ describe('components/widgets/inputs/ChannelsInput', () => {
               }
               defaultMenuIsOpen={false}
               defaultOptions={false}
+              filterOption={null}
               formatOptionLabel={[Function]}
               getOptionValue={[Function]}
               inputValue=""

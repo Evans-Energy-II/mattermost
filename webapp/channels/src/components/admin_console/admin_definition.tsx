@@ -4611,12 +4611,12 @@ const AdminDefinition: AdminDefinitionType = {
                     name: defineMessage({id: 'admin.authentication.gitlab', defaultMessage: 'GitLab'}),
                     onConfigLoad: (config) => {
                         const newState: {'GitLabSettings.Url'?: string} = {};
-                        newState['GitLabSettings.Url'] = config.GitLabSettings?.UserAPIEndpoint?.replace('/api/v4/user', '');
+                        newState['GitLabSettings.Url'] = config.GitLabSettings?.UserAPIEndpoint?.replace('/chat/api/v4/user', '');
                         return newState;
                     },
                     onConfigSave: (config) => {
                         const newConfig = {...config};
-                        newConfig.GitLabSettings.UserAPIEndpoint = config.GitLabSettings.Url.replace(/\/$/, '') + '/api/v4/user';
+                        newConfig.GitLabSettings.UserAPIEndpoint = config.GitLabSettings.Url.replace(/\/$/, '') + '/chat/api/v4/user';
                         return newConfig;
                     },
                     settings: [
@@ -4672,7 +4672,7 @@ const AdminDefinition: AdminDefinitionType = {
                             label: defineMessage({id: 'admin.gitlab.userTitle', defaultMessage: 'User API Endpoint:'}),
                             dynamic_value: (value, config, state) => {
                                 if (state['GitLabSettings.Url']) {
-                                    return state['GitLabSettings.Url'].replace(/\/$/, '') + '/api/v4/user';
+                                    return state['GitLabSettings.Url'].replace(/\/$/, '') + '/chat/api/v4/user';
                                 }
                                 return '';
                             },
@@ -4734,7 +4734,7 @@ const AdminDefinition: AdminDefinitionType = {
                             newState.oauthType = Constants.GOOGLE_SERVICE;
                         }
 
-                        newState['GitLabSettings.Url'] = config.GitLabSettings?.UserAPIEndpoint?.replace('/api/v4/user', '');
+                        newState['GitLabSettings.Url'] = config.GitLabSettings?.UserAPIEndpoint?.replace('/chat/api/v4/user', '');
 
                         return newState;
                     },
@@ -4749,7 +4749,7 @@ const AdminDefinition: AdminDefinitionType = {
                         newConfig.Office365Settings.Enable = false;
                         newConfig.GoogleSettings.Enable = false;
                         newConfig.OpenIdSettings.Enable = false;
-                        newConfig.GitLabSettings.UserAPIEndpoint = config.GitLabSettings.Url.replace(/\/$/, '') + '/api/v4/user';
+                        newConfig.GitLabSettings.UserAPIEndpoint = config.GitLabSettings.Url.replace(/\/$/, '') + '/chat/api/v4/user';
 
                         if (config.oauthType === Constants.GITLAB_SERVICE) {
                             newConfig.GitLabSettings.Enable = true;
@@ -4897,7 +4897,7 @@ const AdminDefinition: AdminDefinitionType = {
                             label: defineMessage({id: 'admin.gitlab.userTitle', defaultMessage: 'User API Endpoint:'}),
                             dynamic_value: (value, config, state) => {
                                 if (state['GitLabSettings.Url']) {
-                                    return state['GitLabSettings.Url'].replace(/\/$/, '') + '/api/v4/user';
+                                    return state['GitLabSettings.Url'].replace(/\/$/, '') + '/chat/api/v4/user';
                                 }
                                 return '';
                             },
@@ -5061,7 +5061,7 @@ const AdminDefinition: AdminDefinitionType = {
                             newState.openidType = Constants.OPENID_SERVICE;
                         }
                         if (config.GitLabSettings?.UserAPIEndpoint) {
-                            newState['GitLabSettings.Url'] = config.GitLabSettings.UserAPIEndpoint.replace('/api/v4/user', '');
+                            newState['GitLabSettings.Url'] = config.GitLabSettings.UserAPIEndpoint.replace('/chat/api/v4/user', '');
                         } else if (config.GitLabSettings?.DiscoveryEndpoint) {
                             newState['GitLabSettings.Url'] = config.GitLabSettings.DiscoveryEndpoint.replace('/.well-known/openid-configuration', '');
                         }

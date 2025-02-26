@@ -37,7 +37,7 @@ import {
 } from 'mattermost-redux/actions/channels';
 import {getCloudSubscription} from 'mattermost-redux/actions/cloud';
 import {clearErrors, logError} from 'mattermost-redux/actions/errors';
-import {setServerVersion, getClientConfig, getCustomProfileAttributeFields} from 'mattermost-redux/actions/general';
+import {setServerVersion, getClientConfig} from 'mattermost-redux/actions/general';
 import {getGroup as fetchGroup} from 'mattermost-redux/actions/groups';
 import {
     getCustomEmojiForReaction,
@@ -284,9 +284,6 @@ export function reconnect() {
             handler();
         }
     });
-
-    // Refresh custom profile attributes on reconnect
-    dispatch(getCustomProfileAttributeFields());
 
     if (state.websocket.lastDisconnectAt) {
         dispatch(checkForModifiedUsers());
@@ -632,18 +629,6 @@ export function handleEvent(msg) {
         break;
     case SocketEvents.HOSTED_CUSTOMER_SIGNUP_PROGRESS_UPDATED:
         dispatch(handleHostedCustomerSignupProgressUpdated(msg));
-        break;
-    case SocketEvents.CPA_VALUES_UPDATED:
-        dispatch(handleCustomAttributeValuesUpdated(msg));
-        break;
-    case SocketEvents.CPA_FIELD_CREATED:
-        dispatch(handleCustomAttributesCreated(msg));
-        break;
-    case SocketEvents.CPA_FIELD_UPDATED:
-        dispatch(handleCustomAttributesUpdated(msg));
-        break;
-    case SocketEvents.CPA_FIELD_DELETED:
-        dispatch(handleCustomAttributesDeleted(msg));
         break;
     default:
     }
@@ -1911,33 +1896,5 @@ function handleChannelBookmarkSorted(msg) {
     return {
         type: ChannelBookmarkTypes.RECEIVED_BOOKMARKS,
         data: {channelId: msg.broadcast.channel_id, bookmarks},
-    };
-}
-
-export function handleCustomAttributeValuesUpdated(msg) {
-    return {
-        type: UserTypes.RECEIVED_CPA_VALUES,
-        data: {userID: msg.data.user_id, customAttributeValues: msg.data.values},
-    };
-}
-
-export function handleCustomAttributesCreated(msg) {
-    return {
-        type: GeneralTypes.CUSTOM_PROFILE_ATTRIBUTE_FIELD_CREATED,
-        data: msg.data.field,
-    };
-}
-
-export function handleCustomAttributesUpdated(msg) {
-    return {
-        type: GeneralTypes.CUSTOM_PROFILE_ATTRIBUTE_FIELD_PATCHED,
-        data: msg.data.field,
-    };
-}
-
-export function handleCustomAttributesDeleted(msg) {
-    return {
-        type: GeneralTypes.CUSTOM_PROFILE_ATTRIBUTE_FIELD_DELETED,
-        data: msg.data.field_id,
     };
 }

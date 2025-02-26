@@ -296,7 +296,7 @@ func (a *App) GetEmojiStaticURL(c request.CTX, emojiName string) (string, *model
 
 	emoji, err := a.Srv().Store().Emoji().GetByName(c, emojiName, true)
 	if err == nil {
-		return path.Join(subPath, "/api/v4/emoji", emoji.Id, "image"), nil
+		return path.Join(subPath, "/chat/api/v4/emoji", emoji.Id, "image"), nil
 	}
 	var nfErr *store.ErrNotFound
 	switch {

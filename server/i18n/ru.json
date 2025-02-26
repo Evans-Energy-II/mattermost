@@ -3997,7 +3997,7 @@
   },
   {
     "id": "model.incoming_hook.id.app_error",
-    "translation": "Неверный идентификатор: {{.Id}}."
+    "translation": "Недопустимый идентификатор."
   },
   {
     "id": "model.incoming_hook.parse_data.app_error",

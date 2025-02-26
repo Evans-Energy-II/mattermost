@@ -749,8 +749,8 @@ func (a *App) getLinkMetadataForURL(c request.CTX, requestURL string) (*opengrap
 	var body io.ReadCloser
 	var contentType string
 
-	if (request.URL.Scheme+"://"+request.URL.Host) == a.GetSiteURL() && request.URL.Path == "/api/v4/image" {
-		// /api/v4/image requires authentication, so bypass the API by hitting the proxy directly
+	if (request.URL.Scheme+"://"+request.URL.Host) == a.GetSiteURL() && request.URL.Path == "/chat/api/v4/image" {
+		// /chat/api/v4/image requires authentication, so bypass the API by hitting the proxy directly
 		body, contentType, err = a.ImageProxy().GetImageDirect(a.ImageProxy().GetUnproxiedImageURL(request.URL.String()))
 	} else {
 		request.Header.Add("Accept", "image/*")

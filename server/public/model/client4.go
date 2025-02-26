@@ -48,9 +48,9 @@ const (
 
 	ClientDir = "client"
 
-	APIURLSuffixV1 = "/api/v1"
-	APIURLSuffixV4 = "/api/v4"
-	APIURLSuffixV5 = "/api/v5"
+	APIURLSuffixV1 = "/chat/api/v1"
+	APIURLSuffixV4 = "/chat/api/v4"
+	APIURLSuffixV5 = "//chat/api/v5"
 	APIURLSuffix   = APIURLSuffixV4
 )
 
@@ -774,7 +774,7 @@ func (c *Client4) DoAPIRequestReader(ctx context.Context, method, url string, da
 		rq.Header.Set(HeaderAuth, c.AuthType+" "+c.AuthToken)
 	}
 
-	if len(c.HTTPHeader) > 0 {
+	if c.HTTPHeader != nil && len(c.HTTPHeader) > 0 {
 		for k, v := range c.HTTPHeader {
 			rq.Header.Set(k, v)
 		}

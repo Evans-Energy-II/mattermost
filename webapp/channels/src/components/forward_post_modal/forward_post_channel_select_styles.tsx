@@ -1,24 +1,30 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import type {StylesConfig} from 'react-select';
+import type * as CSS from 'csstype';
+import type {CSSProperties} from 'react';
+import type {ControlProps} from 'react-select';
 
 import type {ChannelOption} from './forward_post_channel_select';
+
+type Pseudos = CSS.Pseudos | '::-webkit-scrollbar' | '::-webkit-scrollbar-track' | '::-webkit-scrollbar-thumb';
+
+type CSSPropertiesWithPseudos = CSSProperties & { [P in Pseudos]?: CSS.Properties };
 
 const menuMargin = 4;
 const selectHeight = 40;
 
-const getBaseStyles = (bodyHeight: number): StylesConfig<ChannelOption, boolean> => {
+const getBaseStyles = (bodyHeight: number) => {
     const minMenuHeight = bodyHeight - selectHeight - menuMargin;
 
     return ({
-        input: (provided) => ({
+        input: (provided: CSSProperties): CSSPropertiesWithPseudos => ({
             ...provided,
             padding: 0,
             margin: 0,
             color: 'var(--center-channel-color)',
         }),
-        placeholder: (provided) => ({
+        placeholder: (provided: CSSProperties): CSSPropertiesWithPseudos => ({
             ...provided,
             margin: 0,
             color: 'rgba(var(--center-channel-color-rgb), 0.75)',
@@ -26,7 +32,9 @@ const getBaseStyles = (bodyHeight: number): StylesConfig<ChannelOption, boolean>
             lineHeight: '20px',
         }),
 
-        control: (provided, state) => {
+        // disabling this rule here since otherwise tsc will complain about it in the props
+        // eslint-disable-next-line @typescript-eslint/ban-types
+        control: (provided: CSSProperties, state: ControlProps<{}>): CSSPropertiesWithPseudos => {
             const focusShadow = 'inset 0 0 0 2px var(--button-bg)';
 
             return ({
@@ -45,31 +53,31 @@ const getBaseStyles = (bodyHeight: number): StylesConfig<ChannelOption, boolean>
                 },
             });
         },
-        indicatorSeparator: () => ({
+        indicatorSeparator: (): CSSPropertiesWithPseudos => ({
             display: 'none',
         }),
-        indicatorsContainer: (provided) => ({
+        indicatorsContainer: (provided: CSSProperties): CSSPropertiesWithPseudos => ({
             ...provided,
             padding: '2px',
         }),
-        dropdownIndicator: (provided, state) => ({
+        dropdownIndicator: (provided: CSSProperties, state: ControlProps<ChannelOption>): CSSPropertiesWithPseudos => ({
             ...provided,
             transform: state.isFocused ? 'rotate(180deg)' : 'rotate(0)',
             transition: 'transform 250ms ease-in-out',
         }),
-        valueContainer: (provided) => ({
+        valueContainer: (provided: CSSProperties): CSSPropertiesWithPseudos => ({
             ...provided,
             overflow: 'visible',
             padding: '0 16px 0 0',
             margin: 0,
         }),
-        menu: (provided) => ({
+        menu: (provided: CSSProperties): CSSPropertiesWithPseudos => ({
             ...provided,
             padding: 0,
             margin: `${menuMargin}px 0 0 0`,
             zIndex: 10,
         }),
-        menuList: (provided) => ({
+        menuList: (provided: CSSProperties): CSSPropertiesWithPseudos => ({
             ...provided,
             padding: 0,
             backgroundColor: 'var(--center-channel-bg)',
@@ -102,7 +110,7 @@ const getBaseStyles = (bodyHeight: number): StylesConfig<ChannelOption, boolean>
                 borderRadius: '9999px',
             },
         }),
-        groupHeading: (provided) => ({
+        groupHeading: (provided: CSSProperties): CSSPropertiesWithPseudos => ({
             ...provided,
             cursor: 'default',
             position: 'relative',
@@ -118,19 +126,19 @@ const getBaseStyles = (bodyHeight: number): StylesConfig<ChannelOption, boolean>
             fontWeight: 600,
             textTransform: 'uppercase',
         }),
-        singleValue: (provided) => ({
+        singleValue: (provided: CSSProperties): CSSPropertiesWithPseudos => ({
             ...provided,
             maxWidth: 'calc(100% - 10px)',
             width: '100%',
             overflow: 'visible',
         }),
-        option: (provided, state) => ({
+        option: (provided: CSSProperties, state: ControlProps<ChannelOption>): CSSPropertiesWithPseudos => ({
             ...provided,
             cursor: 'pointer',
             padding: '8px 20px',
             backgroundColor: state.isFocused ? 'rgba(var(--center-channel-color-rgb), 0.08)' : 'transparent',
         }),
-        menuPortal: (provided) => ({
+        menuPortalTarget: (provided: CSSProperties): CSSPropertiesWithPseudos => ({
             ...provided,
             zIndex: 10,
         }),

@@ -5,7 +5,6 @@ package model
 
 import (
 	"encoding/json"
-	"time"
 )
 
 const (
@@ -17,9 +16,6 @@ const (
 	StatusCacheSize      = SessionCacheSize
 	StatusChannelTimeout = 20000  // 20 seconds
 	StatusMinUpdateTime  = 120000 // 2 minutes
-
-	// DNDExpiryInterval is how often the job to expire temporary DND statuses runs.
-	DNDExpiryInterval = 1 * time.Minute
 )
 
 type Status struct {
@@ -28,12 +24,8 @@ type Status struct {
 	Manual         bool   `json:"manual"`
 	LastActivityAt int64  `json:"last_activity_at"`
 	ActiveChannel  string `json:"active_channel,omitempty" db:"-"`
-
-	// DNDEndTime is the time that the user's DND status will expire. Unlike other timestamps in Mattermost, this value
-	// is in seconds instead of milliseconds.
-	DNDEndTime int64 `json:"dnd_end_time"`
-
-	PrevStatus string `json:"-"`
+	DNDEndTime     int64  `json:"dnd_end_time"`
+	PrevStatus     string `json:"-"`
 }
 
 func (s *Status) ToJSON() ([]byte, error) {

@@ -185,7 +185,6 @@ export default class Root extends React.PureComponent<Props, State> {
 
         this.props.actions.migrateRecentEmojis();
         this.props.actions.loadRecentlyUsedCustomEmojis();
-        this.props.actions.getCustomProfileAttributeFields();
 
         this.showLandingPageIfNecessary();
 
@@ -249,7 +248,7 @@ export default class Root extends React.PureComponent<Props, State> {
             return;
         }
 
-        this.props.history.push('/landing#' + this.props.location.pathname + this.props.location.search);
+        // this.props.history.push('/landing#' + this.props.location.pathname + this.props.location.search);
         BrowserStore.setLandingPageSeen(true);
     };
 
@@ -407,14 +406,14 @@ export default class Root extends React.PureComponent<Props, State> {
                         component={ErrorPage}
                     />
                     <HFRoute
-                        path={'/login'}
+                        path={'/chat/login'}
                         component={Login}
                     />
                     <HFRoute
                         path={'/access_problem'}
                         component={AccessProblem}
                     />
-                    <HFTRoute
+                    {/* <HFTRoute
                         path={'/reset_password'}
                         component={PasswordResetSendLink}
                     />
@@ -441,7 +440,7 @@ export default class Root extends React.PureComponent<Props, State> {
                     <LoggedInRoute
                         path={'/terms_of_service'}
                         component={TermsOfService}
-                    />
+                    /> */}
                     <Route
                         path={'/landing'}
                         component={LinkingLandingPage}

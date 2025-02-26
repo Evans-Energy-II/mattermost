@@ -1,0 +1,8 @@
+build:
+  docker:
+    web: server/Dockerfile
+run:
+  web: "/usr/bin/init"
+setup:
+  config:
+    env_file: .env  

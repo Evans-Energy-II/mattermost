@@ -44,33 +44,34 @@ const MenuStartTrial = (props: Props): JSX.Element | null => {
         return null;
     }
 
-    return (
-        <li
-            className={'MenuStartTrial'}
-            role='menuitem'
-            id={props.id}
-        >
-            <FreeVersionBadge>{'FREE EDITION'}</FreeVersionBadge>
-            <div className='editionText'>
-                {formatMessage(
-                    {
-                        id: 'navbar_dropdown.versionText',
-                        defaultMessage: 'This is the free <link>unsupported</link> edition of Mattermost.',
-                    },
-                    {
-                        link: (msg: React.ReactNode) => (
-                            <ExternalLink
-                                location='menu_start_trial.unsupported-link'
-                                href={LicenseLinks.UNSUPPORTED}
-                            >
-                                {msg}
-                            </ExternalLink>
-                        ),
-                    },
-                )}
-            </div>
-        </li>
-    );
+    return null
+    // return (
+    //     <li
+    //         className={'MenuStartTrial'}
+    //         role='menuitem'
+    //         id={props.id}
+    //     >
+    //         <FreeVersionBadge>{'FREE EDITION'}</FreeVersionBadge>
+    //         <div className='editionText'>
+    //             {formatMessage(
+    //                 {
+    //                     id: 'navbar_dropdown.versionText',
+    //                     defaultMessage: 'This is the free <link>unsupported</link> edition of Mattermost.',
+    //                 },
+    //                 {
+    //                     link: (msg: React.ReactNode) => (
+    //                         <ExternalLink
+    //                             location='menu_start_trial.unsupported-link'
+    //                             href={LicenseLinks.UNSUPPORTED}
+    //                         >
+    //                             {msg}
+    //                         </ExternalLink>
+    //                     ),
+    //                 },
+    //             )}
+    //         </div>
+    //     </li>
+    // );
 };
 
 export default MenuStartTrial;

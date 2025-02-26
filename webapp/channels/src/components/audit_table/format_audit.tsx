@@ -27,7 +27,7 @@ export default function FormatAudit({
     showSession,
 }: Props) {
     const intl = useIntl();
-    const actionURL = audit.action.replace(/\/api\/v[1-9]/, '');
+    const actionURL = audit.action.replace(/\/chat\/api\/v[1-9]/, '');
 
     if (actionURL.indexOf('/channels') === 0) {
         return (

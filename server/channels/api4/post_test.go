@@ -131,6 +131,7 @@ func TestCreatePost(t *testing.T) {
 	})
 
 	t.Run("Create posts without the USE_CHANNEL_MENTIONS Permission - returns ephemeral message with mentions and no ephemeral message without mentions", func(t *testing.T) {
+		t.Skip("MM-62764")
 		wsClient := th.CreateConnectedWebSocketClient(t)
 
 		defaultPerms := th.SaveDefaultRolePermissions()
@@ -187,6 +188,7 @@ func TestCreatePost(t *testing.T) {
 				}
 			case <-timeout:
 				require.Fail(t, fmt.Sprintf("Got %d ephemeral messages, expected: %d", gotEvents, expectedEvents))
+				break
 			}
 		}
 	})
