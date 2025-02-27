@@ -17,4 +17,5 @@ RUN  echo "America/Chicago" > /etc/timezone && \
      opm get bungle/lua-resty-nettle fffonion/lua-resty-openssl && \
      tar -xvzf mattermost-team-linux-amd64.tar.gz || /bin/true && \
      cp /tmp/nginx/* /usr/local/openresty/nginx/conf/ && \
-     cp -R /mattermost/mattermost/client /mattermost/static
+     cp -R /mattermost/mattermost/client /mattermost/static && \
+     mv /tmp/config.json /mattermost/mattermost/config/config.json
