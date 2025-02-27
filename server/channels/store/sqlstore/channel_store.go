@@ -105,6 +105,39 @@ func channelMemberSliceColumns() []string {
 	return []string{"ChannelId", "UserId", "Roles", "LastViewedAt", "MsgCount", "MsgCountRoot", "MentionCount", "MentionCountRoot", "UrgentMentionCount", "NotifyProps", "LastUpdateAt", "SchemeUser", "SchemeAdmin", "SchemeGuest"}
 }
 
+// channelSliceColumns returns fields of the channel as a string slice.
+// Optionally, you can add a prefix (accepts only 1 value) to the fields.
+func channelSliceColumns(prefix ...string) []string {
+	var p string
+	if len(prefix) == 1 {
+		p = prefix[0] + "."
+	} else if len(prefix) > 1 {
+		panic("cannot accept multiple prefixes")
+	}
+
+	return []string{
+		p + "Id",
+		p + "CreateAt",
+		p + "UpdateAt",
+		p + "DeleteAt",
+		p + "TeamId",
+		p + "Type",
+		p + "DisplayName",
+		p + "Name",
+		p + "Header",
+		p + "Purpose",
+		p + "LastPostAt",
+		p + "TotalMsgCount",
+		p + "ExtraUpdateAt",
+		p + "CreatorId",
+		p + "SchemeId",
+		p + "GroupConstrained",
+		p + "Shared",
+		p + "TotalMsgCountRoot",
+		p + "LastRootPostAt",
+	}
+}
+
 func channelMemberToSlice(member *model.ChannelMember) []any {
 	resultSlice := []any{}
 	resultSlice = append(resultSlice, member.ChannelId)
@@ -122,6 +155,30 @@ func channelMemberToSlice(member *model.ChannelMember) []any {
 	resultSlice = append(resultSlice, member.SchemeAdmin)
 	resultSlice = append(resultSlice, member.SchemeGuest)
 	return resultSlice
+}
+
+func channelToSlice(channel *model.Channel) []interface{} {
+	return []interface{}{
+		channel.Id,
+		channel.CreateAt,
+		channel.UpdateAt,
+		channel.DeleteAt,
+		channel.TeamId,
+		channel.Type,
+		channel.DisplayName,
+		channel.Name,
+		channel.Header,
+		channel.Purpose,
+		channel.LastPostAt,
+		channel.TotalMsgCount,
+		channel.ExtraUpdateAt,
+		channel.CreatorId,
+		channel.SchemeId,
+		channel.GroupConstrained,
+		channel.Shared,
+		channel.TotalMsgCountRoot,
+		channel.LastRootPostAt,
+	}
 }
 
 type channelMemberWithSchemeRolesList []channelMemberWithSchemeRoles

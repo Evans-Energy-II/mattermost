@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export PATH=/usr/local/rvm/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/bun/bin:/usr/local/rvm/rubies/ruby-3.3.4/bin
+export PATH=/usr/local/rvm/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/bun/bin:
 
 
 NGX_CFG=/usr/local/openresty/nginx/conf
